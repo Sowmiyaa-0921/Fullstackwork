@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffe6f0, #e0f7fa);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #ff6f61, #ffb347);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+    .restaurant, .cart-section {
+      margin: 25px;
+      padding: 25px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    h2 {
+      color: #ff6f61;
+      margin-bottom: 20px;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      border-radius: 10px;
+      background: linear-gradient(to right, #ffd3b6, #ffaaa5);
+      color: #4a148c;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    .item:hover {
+      transform: scale(1.03);
+      cursor: pointer;
+    }
+    button {
+      background: #4a148c;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #7b1fa2;
+    }
+    .cart-section {
+      max-width: 500px;
+    }
+    #cart div {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #e1bee7;
+      color: #4a148c;
+      font-weight: bold;
+    }
+    .total {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #4a148c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Delicious Bites</h1>
+  </header>
+  <section class="restaurant">
+    <h2>Menu</h2>
+    <div class="menu">
+      <div class="item">
+        <span>Burger</span>
+        <span>₹150</span>
+        <button onclick="addToCart('Burger', 150)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Pizza</span>
+        <span>₹250</span>
+        <button onclick="addToCart('Pizza', 250)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Pasta</span>
+        <span>₹200</span>
+        <button onclick="addToCart('Pasta', 200)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Salad</span>
+        <span>₹120</span>
+        <button onclick="addToCart('Salad', 120)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>French Fries</span>
+        <span>₹100</span>
+        <button onclick="addToCart('French Fries', 100)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Chicken Wings</span>
+        <span>₹180</span>
+        <button onclick="addToCart('Chicken Wings', 180)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Sushi Roll</span>
+        <span>₹350</span>
+        <button onclick="addToCart('Sushi Roll', 350)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Ice Cream</span>
+        <span>₹120</span>
+        <button onclick="addToCart('Ice Cream', 120)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <span>Soft Drink</span>
+        <span>₹60</span>
+        <button onclick="addToCart('Soft Drink', 60)">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+  <section class="cart-section">
+    <h2>Your Cart</h2>
+    <div id="cart"></div>
+    <div class="total">
+      Total: ₹<span id="total">0</span>
+    </div>
+    <button onclick="checkout()">Checkout</button>
+  </section>
+  <script>
+    let cart = [];
+    function addToCart(name, price) {
+      cart.push({name, price});
+      displayCart();
+    }
+    function displayCart() {
+      const cartDiv = document.getElementById('cart');
+      cartDiv.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.textContent = `${item.name} - ₹${item.price}`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.onclick = () => removeFromCart(index);
+        div.appendChild(removeBtn);
+        cartDiv.appendChild(div);
+      });
+      document.getElementById('total').textContent = total;
+    }
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+    function checkout() {
+      if(cart.length === 0) {
+        alert('Your cart is empty!');
+      } else {
+        alert('Order placed successfully!');
+        cart = [];
+        displayCart();
+      }
+    }
+  </script>
+</body>
+</html>
